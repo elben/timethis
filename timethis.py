@@ -24,7 +24,10 @@ def timethis(target):
       start = time.time()
       r = target(*args, **kwargs)
       total = time.time() - start
-      print str(target), "total time:", total
+
+      name, filename, linenum = info(target)
+      print "%s:%d (%s) %f seconds" % (filename, linenum, name, total)
+
       return r
     return decorator
   elif type(target) == str and target == 'persist':
@@ -36,24 +39,17 @@ def timethis(target):
         r = target(*args, **kwargs)
         total = time.time() - start
         runs.append(total)
+
         # TODO: print number of runs we've done
-        print str(target), "took", total, "(avg:", str(sum(runs)/len(runs)),")"
+        name, filename, linenum = info(target)
+        print "%s:%d (%s) %f seconds (avg: %f over %d runs)" % (filename,
+                linenum, name, total, sum(runs)/len(runs), len(runs))
+
         return r
       return wrapper
     return decorator
 
-@timethis
-def boring_loop():
-    for i in xrange(9999999):
-        pass
+def info(target):
+    co = target.__code__
+    return (co.co_name, co.co_filename, co.co_firstlineno)
 
-@timethis('persist')
-def boring_loop2():
-    for i in xrange(500000):
-        pass
-
-boring_loop()
-boring_loop2()
-boring_loop2()
-boring_loop2()
-boring_loop2()
