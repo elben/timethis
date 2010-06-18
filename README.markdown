@@ -19,5 +19,5 @@ Check out timethis_test.py for examples. But here are some nice examples:
 
 # What's Next?
 
-Other features such as dumping outputs to a file is planned. Or you can fork
+Other features such as dumping outputs to a file are planned. Or you can fork
 this project and write it yourself. Give me a ping when you do.
