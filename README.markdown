@@ -6,16 +6,16 @@ Time your Python functions in a super simple way.
 
 Check out timethis_test.py for examples. But here are some nice examples:
 
-        # Print out the running time of the function.
-        @timethis
-        def function1():
-            ...
-        
-        # Print out the running time of the function, but also remember previous
-        # runs and show statistics over multiple runs.
-        @timethis(persist=True)
-        def function2():
-            ...
+    # Print out the running time of the function.
+    @timethis
+    def function1():
+        ...
+    
+    # Print out the running time of the function, but also remember previous
+    # runs and show statistics over multiple runs.
+    @timethis(persist=True)
+    def function2():
+        ...
 
 # What's Next?
 
