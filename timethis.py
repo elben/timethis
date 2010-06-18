@@ -19,17 +19,19 @@ def timethis(target):
   # TODO: clean this up
   # TODO: comment it
   # TODO: make prints prettier (use format strings to limit decimal places)
-  if type(target) == type(timethis): #TODO: a better way to chk if function
-    def decorator(*args, **kwargs):
+
+  if hasattr(target, '__call__'):
+    # 'target' is a function
+    def decorated_func(*args, **kwargs):
       start = time.time()
       r = target(*args, **kwargs)
       total = time.time() - start
 
       name, filename, linenum = info(target)
-      print "%s:%d (%s) %f seconds" % (filename, linenum, name, total)
+      print "%s:%d (%s) %.06f seconds" % (filename, linenum, name, total)
 
       return r
-    return decorator
+    return decorated_func
   elif type(target) == str and target == 'persist':
     # we want persistence
     runs = []
@@ -42,7 +44,7 @@ def timethis(target):
 
         # TODO: print number of runs we've done
         name, filename, linenum = info(target)
-        print "%s:%d (%s) %f seconds (avg: %f over %d runs)" % (filename,
+        print "%s:%d (%s) %.06f seconds (avg: %.06f over %d runs)" % (filename,
                 linenum, name, total, sum(runs)/len(runs), len(runs))
 
         return r
@@ -50,6 +52,6 @@ def timethis(target):
     return decorator
 
 def info(target):
-    co = target.__code__
-    return (co.co_name, co.co_filename, co.co_firstlineno)
+  co = target.__code__
+  return (co.co_name, co.co_filename, co.co_firstlineno)
 
