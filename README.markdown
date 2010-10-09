@@ -6,6 +6,8 @@ Time your Python functions in a super simple way.
 
 Check out timethis_test.py for examples. But here are some nice examples:
 
+    from timethis import timethis
+
     # Print out the running time of the function.
     @timethis
     def function1():
